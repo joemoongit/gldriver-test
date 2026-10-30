@@ -7,7 +7,13 @@
 IDENTIFIER=vc4
 MATCHDRIVER=vc4
 
-if raspi-config nonint is_pifive; then
+# Pi 5 is BCM2712. Read the SoC from the device tree instead of calling
+# "raspi-config nonint is_pifive", which Ubuntu's raspi-config does not have.
+is_pifive() {
+  tr '\0' '\n' 2>/dev/null < /proc/device-tree/compatible | grep -q '^brcm,bcm2712$'
+}
+
+if is_pifive; then
   if ls /dev/dri/by-path/ | grep -q '\(vec\|dsi\|dpi\)-card' ; then
     IDENTIFIER=rp1
     MATCHDRIVER='rp1-vec|rp1-dsi|rp1-dpi'
