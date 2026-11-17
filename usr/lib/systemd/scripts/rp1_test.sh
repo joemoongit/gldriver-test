@@ -16,7 +16,7 @@ is_pifive() {
 if is_pifive; then
   if ls /dev/dri/by-path/ | grep -q '\(vec\|dsi\|dpi\)-card' ; then
     IDENTIFIER=rp1
-    MATCHDRIVER='rp1-vec|rp1-dsi|rp1-dpi'
+    MATCHDRIVER='drm-rp1-vec|drm-rp1-dsi|drm-rp1-dpi'
   fi
 fi
 
